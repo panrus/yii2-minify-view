@@ -5,13 +5,13 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify\tests\unit\data;
+namespace panrus\yii\minify\tests\unit\data;
 
 use yii\web\AssetBundle;
 
 /**
  * Class TestAssetBundle
- * @package rmrevin\yii\minify\tests\unit\data
+ * @package panrus\yii\minify\tests\unit\data
  */
 class PrintAssetBundle extends AssetBundle
 {

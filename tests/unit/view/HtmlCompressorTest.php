@@ -5,14 +5,14 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify\tests\unit\view;
+namespace panrus\yii\minify\tests\unit\view;
 
-use rmrevin\yii\minify\HtmlCompressor;
-use rmrevin\yii\minify\tests\unit\TestCase;
+use panrus\yii\minify\HtmlCompressor;
+use panrus\yii\minify\tests\unit\TestCase;
 
 /**
  * Class HtmlCompressorTest
- * @package rmrevin\yii\minify\tests\unit\view
+ * @package panrus\yii\minify\tests\unit\view
  */
 class HtmlCompressorTest extends TestCase
 {

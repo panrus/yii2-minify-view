@@ -5,14 +5,14 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify\tests\unit;
+namespace panrus\yii\minify\tests\unit;
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 
 /**
  * Class TestCase
- * @package rmrevin\yii\fontawesome\tests\unit
+ * @package panrus\yii\fontawesome\tests\unit
  * This is the base class for all yii framework unit tests.
  */
 abstract class TestCase extends \PHPUnit\Framework\TestCase

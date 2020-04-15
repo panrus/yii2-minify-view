@@ -5,16 +5,17 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify;
+namespace panrus\yii\minify;
 
 use yii\base\Event;
 use yii\helpers\FileHelper;
+use yii\helpers\Html;
 use yii\web\AssetBundle;
 use yii\web\Response;
 
 /**
  * Class View
- * @package rmrevin\yii\minify
+ * @package panrus\yii\minify
  */
 class View extends \yii\web\View
 {
@@ -52,6 +53,11 @@ class View extends \yii\web\View
     /**
      * @var bool
      */
+    public $deferJs = false;
+
+    /**
+     * @var bool
+     */
     public $minifyOutput = false;
 
     /**
@@ -78,6 +84,8 @@ class View extends \yii\web\View
      * @var array options of minified js files
      */
     public $jsOptions = [];
+
+    public $cssOptions = [];
 
     /**
      * @var bool|string charset forcibly assign, otherwise will use all of the files found charset
@@ -139,7 +147,7 @@ class View extends \yii\web\View
     public $cache;
 
     /**
-     * @throws \rmrevin\yii\minify\Exception
+     * @throws \panrus\yii\minify\Exception
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\Exception
@@ -246,5 +254,43 @@ class View extends \yii\web\View
             (new components\CSS($this))->export();
             (new components\JS($this))->export();
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function endPage($ajaxMode = false)
+    {
+        $this->trigger(self::EVENT_END_PAGE);
+
+        $content = ob_get_clean();
+
+        echo strtr($content, [
+            self::PH_HEAD => $this->renderHeadHtml(),
+            self::PH_BODY_BEGIN => $this->renderBodyBeginHtml(),
+            self::PH_BODY_END => ($this->minifyJs ? $this->renderBodyEndHtmlDefer($ajaxMode):''). $this->renderBodyEndHtml($ajaxMode),
+        ]);
+
+        $this->clear();
+    }
+
+    /**
+     * @param $ajaxMode
+     * @return string
+     */
+    protected function renderBodyEndHtmlDefer($ajaxMode)
+    {
+        $lines = [];
+
+        if (!$ajaxMode) {
+            if (!empty($this->js[self::POS_READY])) {
+                $js = "function performDeferredActions() {\n" . implode("\n", $this->js[self::POS_READY]) . "\n};";
+                $lines[] = Html::script($js, ['type' => 'text/javascript']);
+
+                $this->js[self::POS_READY] = false;
+            }
+        }
+
+        return empty($lines) ? '' : implode("\n", $lines);
     }
 }

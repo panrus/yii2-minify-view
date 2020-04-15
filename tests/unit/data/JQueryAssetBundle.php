@@ -5,14 +5,14 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify\tests\unit\data;
+namespace panrus\yii\minify\tests\unit\data;
 
 use yii\web\AssetBundle;
 use yii\web\View;
 
 /**
  * Class JQueryAssetBundle
- * @package rmrevin\yii\minify\tests\unit\data
+ * @package panrus\yii\minify\tests\unit\data
  */
 class JQueryAssetBundle extends AssetBundle
 {

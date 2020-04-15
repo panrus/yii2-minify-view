@@ -5,15 +5,15 @@
  * @link https://rmrevin.com
  */
 
-namespace rmrevin\yii\minify\components;
+namespace panrus\yii\minify\components;
 
-use rmrevin\yii\minify\View;
+use panrus\yii\minify\View;
 use yii\caching\Cache;
 use yii\caching\TagDependency;
 
 /**
  * Class MinifyComponent
- * @package rmrevin\yii\minify\components
+ * @package panrus\yii\minify\components
  */
 abstract class MinifyComponent
 {

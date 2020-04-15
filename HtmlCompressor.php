@@ -5,11 +5,11 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify;
+namespace panrus\yii\minify;
 
 /**
  * Class HtmlCompressor
- * @package rmrevin\yii\minify
+ * @package panrus\yii\minify
  * @deprecated
  */
 class HtmlCompressor

@@ -5,22 +5,22 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify\tests\unit\view;
+namespace panrus\yii\minify\tests\unit\view;
 
-use rmrevin\yii\minify;
+use panrus\yii\minify;
 use yii\helpers\FileHelper;
 use yii\helpers\Url;
 
 /**
  * Class ViewTest
- * @package rmrevin\yii\minify\tests\unit\view
+ * @package panrus\yii\minify\tests\unit\view
  */
 class ViewTest extends minify\tests\unit\TestCase
 {
 
     public function testMain()
     {
-        $this->assertInstanceOf('rmrevin\yii\minify\View', $this->getView());
+        $this->assertInstanceOf('panrus\yii\minify\View', $this->getView());
 
         $this->assertEquals('CP1251', $this->getView()->forceCharset);
     }

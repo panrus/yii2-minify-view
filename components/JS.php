@@ -5,14 +5,15 @@
  * @link https://rmrevin.com
  */
 
-namespace rmrevin\yii\minify\components;
+namespace panrus\yii\minify\components;
 
 use JSMin\JSMin;
 use yii\helpers\Html;
+use yii\web\View;
 
 /**
  * Class JS
- * @package rmrevin\yii\minify\components
+ * @package panrus\yii\minify\components
  */
 class JS extends MinifyComponent
 {
@@ -75,7 +76,7 @@ class JS extends MinifyComponent
         $minifyPath = $this->view->minifyPath;
         $hash = $this->_getSummaryFilesHash($files);
 
-        $resultFile = $minifyPath . DIRECTORY_SEPARATOR . $hash . '.js';
+        $resultFile = $minifyPath . '/' . $hash . '.js';
 
         if (!file_exists($resultFile)) {
             $js = '';
@@ -120,6 +121,14 @@ class JS extends MinifyComponent
 
         $file = $this->prepareResultFile($resultFile);
 
-        $this->view->jsFiles[$position][$file] = Html::jsFile($file, $options);
+        $script = <<<SCRIPT
+var dfLoadFiles = '$file';
+SCRIPT;
+
+        if ($this->view->deferJs) {
+            $this->view->registerJs($script, View::POS_HEAD);
+        } else {
+            $this->view->jsFiles[$position][$file] = Html::jsFile($file, $options);
+        }
     }
 }

@@ -5,13 +5,13 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify;
+namespace panrus\yii\minify;
 
 /**
  * Class Exception
- * @package rmrevin\yii\minify
+ * @package panrus\yii\minify
  */
 class Exception extends \yii\base\Exception
 {
 
-} 
+}

@@ -5,14 +5,14 @@
  * @link https://rmrevin.ru
  */
 
-namespace rmrevin\yii\minify\tests\unit\data;
+namespace panrus\yii\minify\tests\unit\data;
 
 use yii\web\AssetBundle;
 use yii\web\View;
 
 /**
  * Class TestAssetBundle
- * @package rmrevin\yii\minify\tests\unit\data
+ * @package panrus\yii\minify\tests\unit\data
  */
 class TestAssetBundle extends AssetBundle
 {
@@ -34,7 +34,7 @@ class TestAssetBundle extends AssetBundle
     ];
 
     public $depends = [
-        'rmrevin\yii\minify\tests\unit\data\DependAssetBundle',
+        'panrus\yii\minify\tests\unit\data\DependAssetBundle',
     ];
 
     public function init()

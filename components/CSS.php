@@ -5,13 +5,14 @@
  * @link https://rmrevin.com
  */
 
-namespace rmrevin\yii\minify\components;
+namespace panrus\yii\minify\components;
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
  * Class CSS
- * @package rmrevin\yii\minify\components
+ * @package panrus\yii\minify\components
  */
 class CSS extends MinifyComponent
 {
@@ -19,7 +20,7 @@ class CSS extends MinifyComponent
     public function export()
     {
         $cssFiles = $this->view->cssFiles;
-
+        $cssOptions = ArrayHelper::merge($this->view->cssOptions, ['rel' => 'preload', 'as' => 'style', 'onload' => 'this.rel="stylesheet"']);
         $this->view->cssFiles = [];
 
         $toMinify = [];
@@ -29,11 +30,11 @@ class CSS extends MinifyComponent
                 if ($this->view->concatCss) {
                     $toMinify[$file] = $html;
                 } else {
-                    $this->process([$file => $html]);
+                    $this->process([$file => $html], $cssOptions);
                 }
             } else {
                 if (!empty($toMinify)) {
-                    $this->process($toMinify);
+                    $this->process($toMinify, $cssOptions);
 
                     $toMinify = [];
                 }
@@ -43,7 +44,7 @@ class CSS extends MinifyComponent
         }
 
         if (!empty($toMinify)) {
-            $this->process($toMinify);
+            $this->process($toMinify, $cssOptions);
         }
 
         unset($toMinify);
@@ -52,7 +53,7 @@ class CSS extends MinifyComponent
     /**
      * @param array $files
      */
-    protected function process(array $files)
+    protected function process(array $files, $options)
     {
         $minifyPath = $this->view->minifyPath;
         $hash = $this->_getSummaryFilesHash($files);
@@ -137,7 +138,7 @@ class CSS extends MinifyComponent
 
         $file = $this->prepareResultFile($resultFile);
 
-        $this->view->cssFiles[$file] = Html::cssFile($file);
+        $this->view->cssFiles[$file] = Html::cssFile($file, $options);
     }
 
     /**
@@ -271,7 +272,7 @@ class CSS extends MinifyComponent
     {
         $context = [
             'ssl' => [
-                'verify_peer'      => false,
+                'verify_peer' => false,
                 'verify_peer_name' => false,
             ],
         ];

@@ -28,13 +28,13 @@ The preferred way to install this extension is through [composer](https://getcom
 Either run
 
 ```bash
-composer require rmrevin/yii2-minify-view
+composer require panrus/yii2-minify-view
 ```
 
 or add
 
 ```
-"rmrevin/yii2-minify-view": "^1.15",
+"panrus/yii2-minify-view": "^1.15",
 ```
 
 to the `require` section of your `composer.json` file.
@@ -49,12 +49,13 @@ return [
 	'components' => [
 		// ...
 		'view' => [
-			'class' => '\rmrevin\yii\minify\View',
+			'class' => '\panrus\yii\minify\View',
 			'enableMinify' => !YII_DEBUG,
 			'concatCss' => true, // concatenate css
 			'minifyCss' => true, // minificate css
 			'concatJs' => true, // concatenate js
 			'minifyJs' => true, // minificate js
+            'deferJs' => false, // defer loading of JavaScript
 			'minifyOutput' => true, // minificate result html page
 			'webPath' => '@web', // path alias to web base
 			'basePath' => '@webroot', // path alias to web base
@@ -74,3 +75,35 @@ return [
 	]
 ];
 ```
+
+### Defer loading
+If `'deferJs' => true` you must include this code at your layout file
+
+```php
+$js = <<<SCRIPT
+(function() {
+      function getScript(url,success){
+        var script=document.createElement('script');
+        script.src=url;
+        var head=document.getElementsByTagName('head')[0],
+            done=false;
+        script.onload=script.onreadystatechange = function(){
+          if ( !done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete') ) {
+            done=true;
+            success();
+            script.onload = script.onreadystatechange = null;
+            head.removeChild(script);
+          }
+        };
+        head.appendChild(script);
+      }
+        getScript(dfLoadFiles,function(){
+            setTimeout(function () {
+                performDeferredActions();
+            }, 100);
+        });
+    })();
+SCRIPT;
+$this->registerJs($js, \yii\web\View::POS_BEGIN);
+```
+			
